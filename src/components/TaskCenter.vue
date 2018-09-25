@@ -4,8 +4,7 @@
       <div class="get-gold">
         <div class="total-golds">签到累积金币：<span class="num">{{totalGolds}}</span></div>
         <a class="right-now-lottery">
-          <span>立刻</span>
-          <span>抽奖</span>
+          <span>立刻<br />抽奖</span>
         </a>
         <div class="sign-in">
           <div class="sign-in-btn">签到领金币</div>
@@ -71,11 +70,14 @@
         }
       }
       .right-now-lottery{
-        display: block;
+        display: flex;
         width: 1.6rem;
         height: 1.6rem;
         border-radius: 50%;
         border:2px solid @pinkColor;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
         span{
           display: block;
           height:auto;
