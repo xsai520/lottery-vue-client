@@ -13,7 +13,7 @@
         </div>
         <div class="golds-num" >
           <flexbox class="golds">
-            <flexbox-item v-for="item in items" :key="item.id" class="active">
+            <flexbox-item v-for="item in items" :key="item.id" :class="{active:item.isActive}">
               <div><span>+</span>{{item.text}}</div>
               <img src="../images/金币@2x.png"/>
             </flexbox-item>
@@ -36,19 +36,28 @@
            return{
              totalGolds:4522,
              continuousSignDays:1,
-             todayGolds:15,
+             todayGolds:0,
              gutterNum:0,
              activeClass:false,
              items:[
-               {"id":"1","text":"10"},{"id":"2","text":"15"},{"id":"3","text":"20"},
-               {"id":"4","text":"25"},{"id":"5","text":"30"},{"id":"6","text":"35"},{"id":"7","text":"40"}
+               {"id":"1","text":"10","isActive":false},{"id":"2","text":"15","isActive":false},
+               {"id":"3","text":"20","isActive":false},{"id":"4","text":"25","isActive":false},
+               {"id":"5","text":"30","isActive":false},{"id":"6","text":"35","isActive":false},
+               {"id":"7","text":"40","isActive":false}
              ],
              textItem:[{"id":"1","text":"1天"},{"id":"2","text":"2天"},{"id":"3","text":"3天"},
                {"id":"4","text":"4天"},{"id":"5","text":"5天"},{"id":"6","text":"6天"},{"id":"7","text":"7天及以上"}]
            }
         },
       mounted:function(){
+        if(this.continuousSignDays>7){
+          this.items[this.items.length-1].isActive = true;
+          this.todayGolds = this.items[this.items.length-1].text;
+        }else{
+          this.items[this.continuousSignDays-1].isActive=true;
+          this.todayGolds = this.items[this.continuousSignDays-1].text;
 
+        }
       }
     }
 </script>
@@ -170,6 +179,10 @@
       background:@pinkColor !important;
       div{
         color:#fff !important;
+      }
+      img{
+        width:0.48rem !important;
+        height:0.48rem !important
       }
     }
   }
