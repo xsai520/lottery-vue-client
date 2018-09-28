@@ -18,7 +18,7 @@
               <img src="../images/金币@2x.png"/>
             </flexbox-item>
           </flexbox>
-          <flexbox class="text" :gutter="gutterNum">
+          <flexbox class="text" :gutter="0">
             <flexbox-item  v-for="item in textItem" :key="item.id">
               {{item.text}}
             </flexbox-item>
@@ -29,7 +29,7 @@
         <div class="title">新手任务</div>
         <ul>
           <li v-for="item in newbieTask" :key="item.id">
-            <flexbox :gutter="gutterNum">
+            <flexbox :gutter="0">
               <flexbox-item :span="7">
                 <div>
                   <span class="radio-box">
@@ -51,7 +51,7 @@
         <div class="title">每日任务</div>
         <ul>
           <li v-for="item in dayTask" :key="item.id">
-            <flexbox :gutter="gutterNum">
+            <flexbox :gutter="0">
               <flexbox-item :span="7">
                 <div>
                   <span class="radio-box">
@@ -79,16 +79,23 @@
               <div class="name">普通抽奖</div>
             </div>
             <div class="lottery-box">
-
+              <div class="bg2"></div>
             </div>
+            <div class="tip">*每连续签到5天获得1次普通抽奖机会</div>
         </div>
         <div class="super-lottery lottery">
           <div class="name-box">
             <div class="name">超级抽奖</div>
           </div>
           <div class="lottery-box">
-
+            <div class="dotted"></div>
+            <ul class="bg2"  :gutter="0" wrap="wrap" >
+              <li class="lottery-item" :span="4" v-for="item in lotteryItems" :key="item">
+                <div></div>
+              </li>
+            </ul>
           </div>
+          <div class="tip">*每连续签到30天获得3次超级抽奖机会</div>
         </div>
       </div>
     </div>
@@ -103,7 +110,6 @@
              totalGolds:4522,
              continuousSignDays:1,
              todayGolds:0,
-             gutterNum:0,
              activeClass:false,
              items:[
                {"id":"1","text":"10","isActive":false},{"id":"2","text":"15","isActive":false},
@@ -121,11 +127,12 @@
              dayTask:[
                {"id":"1","name":"开启看苏州","gold":10,"done":false},
                {"id":"2","name":"在看苏州停留15分钟","gold":50,"done":false},
-               {"id":"3","name":"阅读5篇文章","progress":"今日进度2/5篇","gold":50,"done":true},
-               {"id":"4","name":"完成3次评论","progress":"今日进度1/3次","gold":30,"done":false},
-               {"id":"5","name":"回复他人评论3次","progress":"今日进度0/3次","gold":30,"done":false},
+               {"id":"3","name":"阅读5篇文章","progress":"(今日进度2/5篇)","gold":50,"done":true},
+               {"id":"4","name":"完成3次评论","progress":"(今日进度1/3次)","gold":30,"done":false},
+               {"id":"5","name":"回复他人评论3次","progress":"(今日进度0/3次)","gold":30,"done":false},
                {"id":"6","name":"分享精彩好文","gold":20,"done":false}
-             ]
+             ],
+             lotteryItems:[1,2,3,4,5,6,7,8,9]
            }
         },
       mounted:function(){
@@ -139,9 +146,7 @@
         }
       },
       methods:{
-        selectItem:function(){
 
-        }
       }
     }
 </script>
@@ -149,6 +154,7 @@
   @pinkColor:#FF6192;
   @bgColor:#fff;
   @grayColor:#f2f2f2;
+  @lotteryBox:8.46rem;
   .themeColor{
     color:  @pinkColor;
   }
@@ -360,10 +366,47 @@
         }
       }
       .lottery-box{
+        position:relative;
         width: 9.36rem;
         height:9.36rem;
         margin: 0 auto;
+        padding:0.35rem;
+        box-sizing: border-box;
+        border-radius: 4px;
+        .dotted{
+          position:absolute;
+          top: 0.08rem;
+          left: 0.08rem;
+          width: 0.2rem;
+          height:0.2rem;
+          background: #fff;
+          border-radius:50%;
+        }
+        .bg2{
+          width:8.66rem;
+          height:8.66rem;
+          border-radius: 4px;
+          .lottery-item{
+            float: left;
+            width:2.88666667rem;
+            height:2.88666667rem;
+            overflow: hidden;
+            div{
+              width:2.68666667rem;
+              height:2.68666667rem;
+              margin: auto;
+              border:0.2rem solid rgba(255,255,255,0.8);
+              background: rgba(255,255,255,0.8);
+              box-sizing: border-box;
+            }
+          }
+        }
       }
+      .tip{
+        width:9.36rem;
+        margin:0 auto;
+      }
+      margin-bottom: 0.7rem;
     }
     .regular-lottery {
       .name-box{
@@ -374,7 +417,9 @@
       }
       .lottery-box{
         background: #ebcd0b;
-        border-radius: 4px;
+        .bg2{
+           background:#f3810f
+        }
       }
     }
     .super-lottery {
@@ -386,6 +431,9 @@
       }
       .lottery-box{
         background: #fe4d82;
+        .bg2{
+          background:#ebcd0a
+        }
       }
     }
   }
