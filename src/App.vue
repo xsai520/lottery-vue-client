@@ -20,6 +20,7 @@ export default {
   }
   html,body{
     background: #F2F2F2;
+    overflow-x: hidden;
   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

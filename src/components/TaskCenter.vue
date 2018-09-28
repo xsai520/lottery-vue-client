@@ -25,6 +25,72 @@
           </flexbox>
         </div>
       </div>
+      <div class="newbieTask task">
+        <div class="title">新手任务</div>
+        <ul>
+          <li v-for="item in newbieTask" :key="item.id">
+            <flexbox :gutter="gutterNum">
+              <flexbox-item :span="7">
+                <div>
+                  <span class="radio-box">
+                  <span  :class="{activeInput:item.done}"></span>
+                </span>
+                </div>
+                <span class="itemContent">{{item.name}}</span>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <img class="img2" src="../images/角标@2x.png"/>
+                <img class="img1" src="../images/金币@2x.png"/>
+                <span class="task-golds">+{{item.gold}}</span>
+              </flexbox-item>
+            </flexbox>
+          </li>
+        </ul>
+      </div>
+      <div class="dayTask task">
+        <div class="title">每日任务</div>
+        <ul>
+          <li v-for="item in dayTask" :key="item.id">
+            <flexbox :gutter="gutterNum">
+              <flexbox-item :span="7">
+                <div>
+                  <span class="radio-box">
+                  <span :class="{activeInput:item.done}"></span>
+                </span>
+                </div>
+                <span class="itemContent">
+                  {{item.name}}
+                  <span v-if="item.progress">{{item.progress}}</span>
+                </span>
+              </flexbox-item>
+              <flexbox-item :span="4">
+                <img class="img2" src="../images/角标@2x.png"/>
+                <img class="img1" src="../images/金币@2x.png"/>
+                <span class="task-golds">+{{item.gold}}</span>
+              </flexbox-item>
+            </flexbox>
+          </li>
+        </ul>
+      </div>
+      <div class="task lottery-type">
+        <div class="title">签到抽奖</div>
+        <div class="regular-lottery lottery">
+            <div class="name-box">
+              <div class="name">普通抽奖</div>
+            </div>
+            <div class="lottery-box">
+
+            </div>
+        </div>
+        <div class="super-lottery lottery">
+          <div class="name-box">
+            <div class="name">超级抽奖</div>
+          </div>
+          <div class="lottery-box">
+
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 <script>
@@ -46,7 +112,20 @@
                {"id":"7","text":"40","isActive":false}
              ],
              textItem:[{"id":"1","text":"1天"},{"id":"2","text":"2天"},{"id":"3","text":"3天"},
-               {"id":"4","text":"4天"},{"id":"5","text":"5天"},{"id":"6","text":"6天"},{"id":"7","text":"7天及以上"}]
+               {"id":"4","text":"4天"},{"id":"5","text":"5天"},{"id":"6","text":"6天"},{"id":"7","text":"7天"}],
+             newbieTask:[
+               {"id":"1","name":"完成注册登录","gold":500,"done":true},
+               {"id":"2","name":"完善个人信息","gold":500,"done":false},
+               {"id":"3","name":"完成实名认证","gold":1000,"done":false}
+             ],
+             dayTask:[
+               {"id":"1","name":"开启看苏州","gold":10,"done":false},
+               {"id":"2","name":"在看苏州停留15分钟","gold":50,"done":false},
+               {"id":"3","name":"阅读5篇文章","progress":"今日进度2/5篇","gold":50,"done":true},
+               {"id":"4","name":"完成3次评论","progress":"今日进度1/3次","gold":30,"done":false},
+               {"id":"5","name":"回复他人评论3次","progress":"今日进度0/3次","gold":30,"done":false},
+               {"id":"6","name":"分享精彩好文","gold":20,"done":false}
+             ]
            }
         },
       mounted:function(){
@@ -56,6 +135,11 @@
         }else{
           this.items[this.continuousSignDays-1].isActive=true;
           this.todayGolds = this.items[this.continuousSignDays-1].text;
+
+        }
+      },
+      methods:{
+        selectItem:function(){
 
         }
       }
@@ -70,10 +154,12 @@
   }
   .task-center{
     .vux-header{
+      position: fixed;
       height: 1.17rem;
       background: @bgColor;
       padding:0;
       border-bottom: 1px solid #E6E6E6;
+      z-index: 9999;
       .vux-header-title{
         color:@pinkColor;
         font-size: 0.53rem;
@@ -88,10 +174,11 @@
       }
     }
     .get-gold{
+      position: relative;
+      top: 1.17rem;
       width: 100%;
       height:6.187rem;
       background: @bgColor;
-      margin-bottom: 0.266rem;
       .total-golds{
         font-size: 0.41rem;
         color: #666;
@@ -105,7 +192,7 @@
       }
       .right-now-lottery{
         position:absolute;
-        top: 1.5rem;
+        top: 0.3rem;
         right: 0.4rem;
         display:block;
         width: 1.6rem;
@@ -151,6 +238,7 @@
             border-radius:4px;
             height:1.586rem;
             background:@grayColor;
+            margin-left: 0.15rem !important;
             div{
               height:0.7rem;
               padding-top:0.25rem;
@@ -183,6 +271,121 @@
       img{
         width:0.48rem !important;
         height:0.48rem !important
+      }
+    }
+    .task{
+      height:auto;
+      background:@bgColor;
+      margin-top: 0.266rem;
+      padding: 0.3rem 0.3rem 0.4rem;
+      .title{
+        padding-bottom: 0.2rem;
+        color: #333;
+        font-size:0.43rem;
+      }
+      ul{
+        li{
+          height: 0.8rem;
+          line-height: 0.8rem;
+          .vux-flexbox-item{
+            position: relative;
+            div{
+              position: absolute;
+              width: 0.38rem;
+              height: 0.38rem;
+              z-index:1;
+              .radio-box{
+                display: flex;
+                float: left;
+                border:1px solid #cccccc;
+                border-radius: 50%;
+                margin: 0.2rem 0.3rem 0.2rem 0.2rem;
+                align-items: center;
+                justify-content: center;
+                .activeInput{
+                  width: 0.2rem;
+                  height: 0.2rem;
+                  background: @pinkColor;
+                  border-radius: 50%;
+                }
+              }
+            }
+            .itemContent{
+              margin-left: 1rem;
+            }
+          }
+          .task-golds,img{
+            display: block;
+            float: right;
+            width: auto;
+            font-size: 0.45rem;
+
+          }
+          .img1{
+            width: 0.43rem;
+            height: 0.43rem;
+            margin: 0.15rem 0.1rem 0.1rem 0.1rem;
+          }
+          .img2{
+            width: 0.32rem;
+            height: 0.16rem;
+            margin: 0.3rem 0.1rem 0.1rem 0.1rem;
+          }
+        }
+      }
+    }
+    .lottery-type{
+      padding:0 !important;
+    }
+    .lottery{
+      .name-box{
+        position: relative;
+        width: 50%;
+        height: 0.4rem;
+        margin:0 auto;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        .name{
+          position: absolute;
+          top:-0.2rem;
+          left:30%;
+          width:40%;
+          height:0.6rem;
+          line-height: 0.6rem;
+          color:#fff;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+          text-align: center;
+          font-size: 0.35rem;
+        }
+      }
+      .lottery-box{
+        width: 9.36rem;
+        height:9.36rem;
+        margin: 0 auto;
+      }
+    }
+    .regular-lottery {
+      .name-box{
+        background: #f2800f;
+        .name{
+          background: #845ae8;
+        }
+      }
+      .lottery-box{
+        background: #ebcd0b;
+        border-radius: 4px;
+      }
+    }
+    .super-lottery {
+      .name-box{
+        background: #cf3e69;
+        .name{
+          background: #fe4d82;
+        }
+      }
+      .lottery-box{
+        background: #fe4d82;
       }
     }
   }
