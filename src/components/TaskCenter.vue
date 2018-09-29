@@ -79,7 +79,12 @@
               <div class="name">普通抽奖</div>
             </div>
             <div class="lottery-box">
-              <div class="bg2"></div>
+              <div class="dotted"></div>
+              <ul class="bg2"  :gutter="0" wrap="wrap" >
+                <li class="lottery-item" :span="4" v-for="item in lotteryItems" :key="item">
+                  <div></div>
+                </li>
+              </ul>
             </div>
             <div class="tip">*每连续签到5天获得1次普通抽奖机会</div>
         </div>
@@ -386,6 +391,7 @@
           width:8.66rem;
           height:8.66rem;
           border-radius: 4px;
+          padding: 0.1rem;
           .lottery-item{
             float: left;
             width:2.88666667rem;
@@ -394,10 +400,14 @@
             div{
               width:2.68666667rem;
               height:2.68666667rem;
-              margin: auto;
-              border:0.2rem solid rgba(255,255,255,0.8);
-              background: rgba(255,255,255,0.8);
+              margin: 0.1rem auto;
+              border:0.1rem solid rgba(255,255,255,0);
+              background:  rgba(255,255,255,0.8);
+              border-radius: 4px;
               box-sizing: border-box;
+            }
+            div.active{
+
             }
           }
         }
@@ -405,6 +415,8 @@
       .tip{
         width:9.36rem;
         margin:0 auto;
+        color: #666;
+        font-size: 0.37rem;
       }
       margin-bottom: 0.7rem;
     }
