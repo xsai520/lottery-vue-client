@@ -73,16 +73,30 @@
         </ul>
       </div>
       <div class="task lottery-type">
-        <div class="title">签到抽奖</div>
+        <div class="title" style="padding:0.3rem 0.3rem 0 0.3rem">签到抽奖</div>
         <div class="regular-lottery lottery">
             <div class="name-box">
               <div class="name">普通抽奖</div>
             </div>
             <div class="lottery-box">
-              <div class="dotted"></div>
+              <!--上-->
+              <div class="dotted dots-top-left" v-for="item in dots" style="top:0.08rem;" :style="{left:item+'rem'}" :key="'top-left'+item"></div>
+              <!--右-->
+              <div class="dotted dots-top-right" v-for="item in dots" style="left:9.12rem;" :style="{top:item+'rem'}" :key="'top-right'+item"></div>
+              <!--下-->
+             <div class="dotted dots-bottom-right" v-for="item in dots" style="top:9.12rem" :style="{right:item+'rem'}" :key="'bottom-left'+item"></div>
+              <!--左-->
+              <div class="dotted dots-bottom-left" v-for="item in dots"  style="left:0.08rem;" :style="{bottom:item+'rem'}" :key="'bottom-right'+item"></div>
               <ul class="bg2"  :gutter="0" wrap="wrap" >
-                <li class="lottery-item" :span="4" v-for="item in lotteryItems" :key="item">
-                  <div></div>
+                <li class="lottery-item" :span="4" v-for="(item,index) in lotteryItems" :key="index" >
+                  <div class="prize" :class="{prizeActive:item.isActive}" v-if="index==4" style="background:#845ae8;border-color:#9b79ec">
+                    <div class="prize-img">抽奖</div>
+                    <div class="prize-name">剩余：<span>{{lotteryNum}}</span>次</div>
+                  </div>
+                  <div class="prize" :class="{prizeActive:item.isActive}" v-else>
+                    <div class="prize-img"><img src="../assets/prize.jpg"/></div>
+                    <div class="prize-name">{{item.prizeName}}</div>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -93,10 +107,24 @@
             <div class="name">超级抽奖</div>
           </div>
           <div class="lottery-box">
-            <div class="dotted"></div>
+            <!--上-->
+            <div class="dotted dots-top-left" v-for="item in dots" style="top:0.08rem;" :style="{left:item+'rem'}" :key="'super-top-left'+item"></div>
+            <!--右-->
+            <div class="dotted dots-top-right" v-for="item in dots" style="left:9.12rem;" :style="{top:item+'rem'}" :key="'super-top-right'+item"></div>
+            <!--下-->
+            <div class="dotted dots-bottom-right" v-for="item in dots" style="top:9.12rem" :style="{right:item+'rem'}" :key="'super-bottom-left'+item"></div>
+            <!--左-->
+            <div class="dotted dots-bottom-left" v-for="item in dots"  style="left:0.08rem;" :style="{bottom:item+'rem'}" :key="'super-bottom-right'+item"></div>
             <ul class="bg2"  :gutter="0" wrap="wrap" >
-              <li class="lottery-item" :span="4" v-for="item in lotteryItems" :key="item">
-                <div></div>
+              <li class="lottery-item" :span="4" v-for="(item,index) in superItems" :key="index">
+                <div class="prize" :class="{prizeActive:item.isActive}" v-if="index==4" style="background:#fe4d82;border-color:#fe6e99">
+                  <div class="prize-img">抽奖</div>
+                  <div class="prize-name">剩余：<span>{{superLotteryNum}}</span>次</div>
+                </div>
+                <div class="prize" :class="{prizeActive:item.isActive}" v-else>
+                  <div class="prize-img"><img src="../assets/prize.jpg"/></div>
+                  <div class="prize-name">{{item.prizeName}}</div>
+                </div>
               </li>
             </ul>
           </div>
@@ -112,10 +140,13 @@
       name:"TaskCenter",
        data(){
            return{
+             dots:["0.08","1","2","3","4","5","6","7","8"],
              totalGolds:4522,
              continuousSignDays:1,
              todayGolds:0,
              activeClass:false,
+             lotteryNum:5,
+             superLotteryNum:5,
              items:[
                {"id":"1","text":"10","isActive":false},{"id":"2","text":"15","isActive":false},
                {"id":"3","text":"20","isActive":false},{"id":"4","text":"25","isActive":false},
@@ -137,7 +168,16 @@
                {"id":"5","name":"回复他人评论3次","progress":"(今日进度0/3次)","gold":30,"done":false},
                {"id":"6","name":"分享精彩好文","gold":20,"done":false}
              ],
-             lotteryItems:[1,2,3,4,5,6,7,8,9]
+             lotteryItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},{"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
+               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},{"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
+               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},{"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
+               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},{"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
+               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false}],
+             superItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},{"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
+               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},{"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
+               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},{"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
+               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},{"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
+               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false}]
            }
         },
       mounted:function(){
@@ -375,39 +415,60 @@
         width: 9.36rem;
         height:9.36rem;
         margin: 0 auto;
-        padding:0.35rem;
+        padding:0.305rem;
         box-sizing: border-box;
         border-radius: 4px;
         .dotted{
           position:absolute;
-          top: 0.08rem;
-          left: 0.08rem;
-          width: 0.2rem;
-          height:0.2rem;
-          background: #fff;
+          width: 0.16rem;
+          height: 0.16rem;
+          background: rgba(255,255,255,0.5);
           border-radius:50%;
         }
+        .dots-top-left:nth-child(even),
+        .dots-top-right:nth-child(even),
+        .dots-bottom-right:nth-child(even),
+        .dots-bottom-left:nth-child(even),
+        .dots-super-top-left:nth-child(even),
+        .dots-super-top-right:nth-child(even),
+        .dots-super-bottom-right:nth-child(even),
+        .dots-super-bottom-left:nth-child(even){
+          background: rgba(255,255,255,1);
+        }
         .bg2{
-          width:8.66rem;
-          height:8.66rem;
+          width:8.55rem;
+          height:8.55rem;
           border-radius: 4px;
           padding: 0.1rem;
           .lottery-item{
             float: left;
-            width:2.88666667rem;
-            height:2.88666667rem;
+            width:2.85rem;
+            height:2.85rem;
             overflow: hidden;
-            div{
-              width:2.68666667rem;
-              height:2.68666667rem;
+            .prize{
+              width:2.65rem;
+              height:2.65rem;
               margin: 0.1rem auto;
               border:0.1rem solid rgba(255,255,255,0);
               background:  rgba(255,255,255,0.8);
               border-radius: 4px;
               box-sizing: border-box;
-            }
-            div.active{
-
+              .prize-img{
+                width:2.13rem;
+                height:1.6rem;
+                margin: 0.1rem auto;
+                img{
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .prize-name{
+                width:100%;
+                height:0.7rem;
+                text-align: center;
+                line-height: 0.7rem;
+              }
             }
           }
         }
@@ -430,7 +491,13 @@
       .lottery-box{
         background: #ebcd0b;
         .bg2{
-           background:#f3810f
+           background:#f3810f;
+          .prizeActive{
+            border-color:#845AE8 !important;
+          }
+           .prize-name{
+             color: #845AE8;
+           }
         }
       }
     }
@@ -444,7 +511,13 @@
       .lottery-box{
         background: #fe4d82;
         .bg2{
-          background:#ebcd0a
+          background:#ebcd0a;
+          .prizeActive{
+            border-color:#FE4D82 !important;
+          }
+          .prize-name{
+            color: #FE4D82 ;
+          }
         }
       }
     }
