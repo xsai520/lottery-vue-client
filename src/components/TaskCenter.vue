@@ -89,9 +89,9 @@
               <div class="dotted dots-bottom-left" v-for="item in dots"  style="left:0.08rem;" :style="{bottom:item+'rem'}" :key="'bottom-right'+item"></div>
               <ul class="bg2"  :gutter="0" wrap="wrap" >
                 <li class="lottery-item" :span="4" v-for="(item,index) in lotteryItems" :key="index" >
-                  <div class="prize" :class="{prizeActive:item.isActive}" v-if="index==4" style="background:#845ae8;border-color:#9b79ec">
-                    <div class="prize-img">抽奖</div>
-                    <div class="prize-name">剩余：<span>{{lotteryNum}}</span>次</div>
+                  <div class="prize" :class="{prizeActive:item.isActive}" v-if="index==4" @click="regularLottery"  style="background:#845ae8;border-color:#9b79ec">
+                    <div class="prize-text">抽奖</div>
+                    <div class="prize-num">剩余：<span>{{lotteryNum}}</span>次</div>
                   </div>
                   <div class="prize" :class="{prizeActive:item.isActive}" v-else>
                     <div class="prize-img"><img src="../assets/prize.jpg"/></div>
@@ -116,10 +116,10 @@
             <!--左-->
             <div class="dotted dots-bottom-left" v-for="item in dots"  style="left:0.08rem;" :style="{bottom:item+'rem'}" :key="'super-bottom-right'+item"></div>
             <ul class="bg2"  :gutter="0" wrap="wrap" >
-              <li class="lottery-item" :span="4" v-for="(item,index) in superItems" :key="index">
+              <li class="lottery-item" :span="4" v-for="(item,index) in superItems" :key="index" >
                 <div class="prize" :class="{prizeActive:item.isActive}" v-if="index==4" style="background:#fe4d82;border-color:#fe6e99">
-                  <div class="prize-img">抽奖</div>
-                  <div class="prize-name">剩余：<span>{{superLotteryNum}}</span>次</div>
+                  <div class="prize-text">抽奖</div>
+                  <div class="prize-num">剩余：<span>{{superLotteryNum}}</span>次</div>
                 </div>
                 <div class="prize" :class="{prizeActive:item.isActive}" v-else>
                   <div class="prize-img"><img src="../assets/prize.jpg"/></div>
@@ -168,15 +168,23 @@
                {"id":"5","name":"回复他人评论3次","progress":"(今日进度0/3次)","gold":30,"done":false},
                {"id":"6","name":"分享精彩好文","gold":20,"done":false}
              ],
-             lotteryItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},{"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
-               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},{"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
-               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},{"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
-               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},{"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
-               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false}],
-             superItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},{"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
-               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},{"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
-               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},{"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
-               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},{"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
+             lotteryItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true,"order":0},
+               {"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false,"order":1},
+               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false,"order":2},
+               {"id":4,"prizeName":"","prizeImg":""},
+               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false,"order":7},
+               {"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false,"order":3},
+               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false,"order":6},
+               {"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false,"order":5},
+               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false,"order":4}],
+             superItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},
+               {"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
+               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},
+               {"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
+               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},
+               {"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
+               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},
+               {"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
                {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false}]
            }
         },
@@ -191,7 +199,20 @@
         }
       },
       methods:{
+        regularLottery:function () {
+          let time=0;
+          time = setInterval(()=>{
+            this.lotteryItems.forEach((item,index,arr)=>{
+              if(index>0 && index<arr.length){
 
+              }
+            });
+          },500)
+
+        },
+        superLottery:function () {
+
+        }
       }
     }
 </script>
@@ -342,8 +363,8 @@
             position: relative;
             div{
               position: absolute;
-              width: 0.38rem;
-              height: 0.38rem;
+              width: 0.36rem;
+              height: 0.36rem;
               z-index:1;
               .radio-box{
                 display: flex;
@@ -468,6 +489,18 @@
                 height:0.7rem;
                 text-align: center;
                 line-height: 0.7rem;
+              }
+              .prize-text{
+                display: flex;
+                height:1.6rem;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.95rem;
+                color: #fff;
+              }
+              .prize-num{
+                color: #fff;
+                text-align: center;
               }
             }
           }
