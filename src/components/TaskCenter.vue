@@ -202,12 +202,20 @@
         regularLottery:function () {
           let time=0;
           time = setInterval(()=>{
-            this.lotteryItems.forEach((item,index,arr)=>{
-              if(index>0 && index<arr.length){
-
-              }
-            });
-          },500)
+            let array=[0,1,2,5,8,7,6,3];
+            for(let i=0;i<array.length;i++){
+              this.lotteryItems.forEach((item,index,arr)=>{
+                if(array[i]==index){
+                  console.log(index);
+                  console.log(array[i]);
+                  this.lotteryItems[index].isActive=true;
+                  debugger
+                }else{
+                  item.isActive=false;
+                }
+              });
+            }
+          },1000)
 
         },
         superLottery:function () {
