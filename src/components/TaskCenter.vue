@@ -204,14 +204,10 @@
           let _this = this;
           let array=[0,1,2,5,8,7,6,3]; //这是抽奖要走的路线位置，每个数字代表抽奖数组的下标
           for(let i=0;i<8;i++){
-//            _this.lotteryItems.forEach((item,index)=>{
-//              _this.lotteryItems[index].isActive=false;
-//            });
+            _this.lotteryItems[array[i]].isActive = true
               setTimeout(()=>{
-//                  if(i!=0){
-//                    _this.lotteryItems[array[i-1]].isActive = false;
-//                  }
-                _this.lotteryItems[array[i]].isActive = true
+
+
               },2000)
           }
 //          console.log(array[count]);
