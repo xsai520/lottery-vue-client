@@ -168,24 +168,25 @@
                {"id":"5","name":"回复他人评论3次","progress":"(今日进度0/3次)","gold":30,"done":false},
                {"id":"6","name":"分享精彩好文","gold":20,"done":false}
              ],
-             lotteryItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true,"order":0},
-               {"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false,"order":1},
-               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false,"order":2},
-               {"id":4,"prizeName":"","prizeImg":""},
-               {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false,"order":7},
-               {"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false,"order":3},
-               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false,"order":6},
-               {"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false,"order":5},
-               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false,"order":4}],
-             superItems:[{"id":1,"prizeName":"电饭锅","prizeImg":"","isActive":true},
-               {"id":2,"prizeName":"电饭锅2","prizeImg":"","isActive":false},
-               {"id":3,"prizeName":"电饭锅3","prizeImg":"","isActive":false},
-               {"id":4,"prizeName":"电饭锅4","prizeImg":"","isActive":false},
+             lotteryItems:[
+               {"id":1,"prizeName":"一等奖","prizeImg":"","isActive":false,"order":0},
+               {"id":2,"prizeName":"二等奖","prizeImg":"","isActive":false,"order":1},
+               {"id":3,"prizeName":"三等奖","prizeImg":"","isActive":false,"order":2},
+               {"id":4,"prizeName":"四等奖","prizeImg":"","isActive":false,"order":7},
+               {"id":5,"prizeName":"","prizeImg":""},
+               {"id":6,"prizeName":"五等奖","prizeImg":"","isActive":false,"order":3},
+               {"id":7,"prizeName":"六等奖","prizeImg":"","isActive":false,"order":6},
+               {"id":8,"prizeName":"七等奖","prizeImg":"","isActive":false,"order":5},
+               {"id":9,"prizeName":"八等奖","prizeImg":"","isActive":false,"order":4}],
+             superItems:[{"id":1,"prizeName":"一等奖","prizeImg":"","isActive":true},
+               {"id":2,"prizeName":"二等奖","prizeImg":"","isActive":false},
+               {"id":3,"prizeName":"三等奖","prizeImg":"","isActive":false},
+               {"id":4,"prizeName":"四等奖","prizeImg":"","isActive":false},
                {"id":5,"prizeName":"电饭锅5","prizeImg":"","isActive":false},
-               {"id":6,"prizeName":"电饭锅6","prizeImg":"","isActive":false},
-               {"id":7,"prizeName":"电饭锅7","prizeImg":"","isActive":false},
-               {"id":8,"prizeName":"电饭锅8","prizeImg":"","isActive":false},
-               {"id":9,"prizeName":"电饭锅9","prizeImg":"","isActive":false}]
+               {"id":6,"prizeName":"五等奖","prizeImg":"","isActive":false},
+               {"id":7,"prizeName":"六等奖","prizeImg":"","isActive":false},
+               {"id":8,"prizeName":"七等奖","prizeImg":"","isActive":false},
+               {"id":9,"prizeName":"八等奖","prizeImg":"","isActive":false}]
            }
         },
       mounted:function(){
@@ -200,23 +201,33 @@
       },
       methods:{
         regularLottery:function () {
-          let time=0;
-          time = setInterval(()=>{
-            let array=[0,1,2,5,8,7,6,3];
-            for(let i=0;i<array.length;i++){
-              this.lotteryItems.forEach((item,index,arr)=>{
-                if(array[i]==index){
-                  console.log(index);
-                  console.log(array[i]);
-                  this.lotteryItems[index].isActive=true;
-                  debugger
-                }else{
-                  item.isActive=false;
-                }
-              });
-            }
-          },1000)
-
+          let _this = this;
+          let array=[0,1,2,5,8,7,6,3]; //这是抽奖要走的路线位置，每个数字代表抽奖数组的下标
+          for(let i=0;i<8;i++){
+//            _this.lotteryItems.forEach((item,index)=>{
+//              _this.lotteryItems[index].isActive=false;
+//            });
+              setTimeout(()=>{
+//                  if(i!=0){
+//                    _this.lotteryItems[array[i-1]].isActive = false;
+//                  }
+                _this.lotteryItems[array[i]].isActive = true
+              },2000)
+          }
+//          console.log(array[count]);
+//          for(let i=0;i<8;i++){
+//            console.log(count)
+//
+//            let time = setInterval(function(){
+//                  _this.lotteryItems[array[count]].isActive=true;
+//                  console.log(array[count])
+//                },1000)
+//            count++;
+//            clearInterval(time)
+//            if(count==8){
+//              count=0;
+//            }
+//          }
         },
         superLottery:function () {
 
