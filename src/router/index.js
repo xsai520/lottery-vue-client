@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import TaskCenter from '@/components/TaskCenter'
+import TaskCenter from '@/pages/TaskCenter'
 
 Vue.use(Router)
 

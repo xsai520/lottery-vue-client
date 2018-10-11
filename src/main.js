@@ -5,9 +5,10 @@ import App from './App'
 import router from './router'
 import VueScroller from 'vue-scroller'
 import FastClick from 'fastclick';
+import  { AlertPlugin } from 'vux'
 import '@/config/rem'
 Vue.config.productionTip = false;
-
+Vue.use(AlertPlugin)
 Vue.use(VueScroller)
 
 FastClick.attach(document.body)
